@@ -1,4 +1,4 @@
-# Chaintune-Music-Platform
+
 # Chaintune-Music-Platform
   <a name="readme-top"></a>
   <h3 align="center">ChainTune</h3>

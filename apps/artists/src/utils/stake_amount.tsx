@@ -2,13 +2,13 @@
 import { AptosAccount, AptosClient, BCS, HexString, Network, Provider } from "aptos";
 export class StakeAmount {
   private provider = new Provider(Network.DEVNET);
-  public moduleAddress = `0xa715798c513b5af39165b04969c3c502fedc5da1dd3b64cbfc68573368ba3c9b`;
-  public teamAddress = `0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660`;
+  public moduleAddress = `0x4b9756767d645fd255bebcbe818ce313dd3036cfbd2c994fe7ddf2728084267e`;
+  public teamAddress = "0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660";
   public streamsThreshold = 1000;
   public stakeAmount = 100000000;
   private isStaked: boolean = false;
   private privateKeyHex = "0xddb7925e1958cbbc6aa9be59ed6a8107b8b157634e51a7f09f1ca20f7440f785"; //process.env.PRIVATE_KEY;
-  private withdrawalAddress = "0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660";
+  private withdrawalAddress = "0x09659772f012f49dd49b0c8f98ef2252f29f7eb21c1e49eaaac6f70b11344d3c";
   private privateKeyBytes = HexString.ensure(this.privateKeyHex).toUint8Array();
   
 
@@ -52,7 +52,7 @@ export class StakeAmount {
       type: "entry_function_payload",
       function: `${this.moduleAddress}::locked_coins::initialize_sponsor`,
       type_arguments: ["0x1::aptos_coin::AptosCoin"],
-      arguments: [this.withdrawalAddress],
+      arguments: [this.teamAddress],
     }
     try {
       console.log(account.address);

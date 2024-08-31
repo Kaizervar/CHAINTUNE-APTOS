@@ -3,7 +3,7 @@ import { Network, Provider } from "aptos";
 export  class ArtistRevenue {
 
     private provider = new Provider(Network.DEVNET);
-    public moduleAddress = `0xa715798c513b5af39165b04969c3c502fedc5da1dd3b64cbfc68573368ba3c9b`;
+    public moduleAddress = `0x4b383fdf80ded703071394131c88aeac3c6c72ca7f570e24aabc335ff7be1bfa`;
     public teamAddress = `0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660`;
     public sponsor="0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660";
     public artistaddress="0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660";

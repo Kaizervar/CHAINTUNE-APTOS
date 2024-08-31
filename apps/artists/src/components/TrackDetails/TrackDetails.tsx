@@ -1,3 +1,4 @@
+//@ts-nocheck
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -27,6 +28,7 @@ import axios from "axios";
 import Confetti from "react-confetti";
 import { useNavigate } from "react-router-dom";
 import { Network, Provider } from "aptos";
+import {useRouter} from "next/navigation";
 
 import { useWindowSize } from "@uidotdev/usehooks";
 // const wallet
@@ -53,7 +55,8 @@ interface TrackDetailsProps {
 const provider = new Provider(Network.DEVNET);
 
 const moduleAddress =
-  "0x41c77f139fc81c6991b7e41954e9b19614a7f2180f8b332ff21b658fac050ef7";
+  "0x4b383fdf80ded703071394131c88aeac3c6c72ca7f570e24aabc335ff7be1bfa";
+  const mintingmoduleAddress = "0x6cc3715231ae4482e8a77095d1c11bc9954f65d8b9476de87abf61624d2d216c";
 
 const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
   // const navigate = useNavigate();
@@ -158,14 +161,17 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
 
     const textEncoder = new TextEncoder();
 
-    const song_cid = textEncoder.encode(`ipfs://${cid}`);
+    const song_cid = textEncoder.encode(`${cid}`);
     const song_Name = textEncoder.encode(songName);
-    const audio_cid = textEncoder.encode(`ipfs://${song_audio_cid}`);
-    const image_cid = textEncoder.encode(`ipfs://${song_image_cid}`);
+    const audio_cid = textEncoder.encode(`${song_audio_cid}`);
+    const image_cid = textEncoder.encode(`${song_image_cid}`);
     const album = textEncoder.encode(Album);
     const description = textEncoder.encode(desc);
 
     const payload = {
+      type: "entry_function_payload",
+      function: `${moduleAddress}::Marketplace::mint_and_list_token`,
+      type_arguments: [],
       arguments: [
         song_Name,
         album,
@@ -177,9 +183,8 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
         amount,
         price,
       ],
-      function: `${moduleAddress}::MarketPlace::mint_and_list_token`,
-      type: "entry_function_payload",
-      type_arguments: [],
+
+     
     };
 
     try {
@@ -218,15 +223,17 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
 
     const textEncoder = new TextEncoder();
 
-    const c_id = textEncoder.encode(`https://ipfs.io/ipfs/${cid}`);
+    const c_id = textEncoder.encode(`${cid}`);
     const desc = textEncoder.encode(description);
     const album = textEncoder.encode(Album);
 
     const payload = {
-      arguments: [album, c_id, desc, max_sup],
-      function: `${moduleAddress}::MarketPlace::set_collection_details`,
       type: "entry_function_payload",
+      function: `${moduleAddress}::Marketplace::set_collection_details`,
       type_arguments: [],
+      arguments: [album, c_id, desc, max_sup],
+      
+     
     };
 
     try {
@@ -242,14 +249,32 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
       console.error("Error creating collection:", error);
     }
   };
+  const router= useRouter();
 
-  const handleSingleSongSubmit = (event: React.FormEvent) => {
+  const handleSingleSongSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (song && musicCoverFile) {
-      handleUploadToIPFS(song, "SongAudio");
-      handleUploadToIPFS(musicCoverFile, "SongImage");
+     const song_cid= await handleUploadToIPFS(song, "SongAudio");
+     const image_cid= await handleUploadToIPFS(musicCoverFile, "SongImage");
+      // console.log(trackName);
+      // console.log(musicDescription);
+      // console.log(primaryGenre);
+      // console.log(primaryLanguage);
+      // console.log(featuredArtists);
+      // console.log(isrc);
+      // console.log(writtenBy);
+      // console.log(explicitLyrics);
       alert("Song Uploaded");
-      window.location.replace("http://localhost:3001/manageRelease");
+      console.log("image_cid:", image_cid);
+      console.log("trackName:", trackName);
+      console.log("albumName:", albumName);
+      console.log("musicDescription:", musicDescription);
+      console.log("song_cid:", song_cid);
+      await createCollection(image_cid, trackName, musicDescription, 25);
+      await publishSong(8, 2, image_cid, trackName, trackName, musicDescription, image_cid, song_cid, 25);
+      router.push('/previewRelease'); // Navigate to previewRelease page
+
+      
     }
     setTrackName("");
     setMusicDescription("");
@@ -362,6 +387,7 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
       formData.append("file", file as Blob);
 
       const metadata = JSON.stringify({
+        // eslint-disable-line
         name: `${file.name}`, // eslint-disable-line
       });
       formData.append("pinataMetadata", metadata);
@@ -380,7 +406,7 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
             headers: {
               // "Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
               "Content-Type": `multipart/form-data;`,
-              Authorization: `Bearer ${process.env.NEXT_PUBLIC_JWT}`,
+              "Authorization": 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJiMDIxYWI0Ny1lNzdiLTRmOTktOThjNC1mOTYxN2JjMmU0MzYiLCJlbWFpbCI6ImFiaGluYWJpaXRnQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJwaW5fcG9saWN5Ijp7InJlZ2lvbnMiOlt7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6IkZSQTEifSx7ImRlc2lyZWRSZXBsaWNhdGlvbkNvdW50IjoxLCJpZCI6Ik5ZQzEifV0sInZlcnNpb24iOjF9LCJtZmFfZW5hYmxlZCI6ZmFsc2UsInN0YXR1cyI6IkFDVElWRSJ9LCJhdXRoZW50aWNhdGlvblR5cGUiOiJzY29wZWRLZXkiLCJzY29wZWRLZXlLZXkiOiIxOWUyMjYyZTk3MmMxNjk2MTAzMiIsInNjb3BlZEtleVNlY3JldCI6IjlhZmExMmVlYjM5MDIzY2VjMTllMmI0MWE0M2U3ZjI0ZDcxOWRhZDc5ZjI1NGI1OGUxYTM3ODVlNTc0NWE1MjUiLCJleHAiOjE3NTYwMjAyNDd9.kuFtbjmgGbE8dw-mZZ3FVJJoXEZF5irPN0CYF4HDDDg',
             },
           }
         );
@@ -393,6 +419,8 @@ const TrackDetails: React.FC<TrackDetailsProps> = (props) => {
         } else if (type === "AlbumImage") {
           setAlbumImageCid(resFile.data.IpfsHash);
         }
+        return resFile.data.IpfsHash;
+       
       } catch (error) {
         console.log("Error: ", error);
       }

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useCallback, useReducer, useState } from "react";
+import { use, useCallback, useReducer, useState } from "react";
 import { WalletManager } from "../../utils/connect_wallet";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -17,10 +17,11 @@ import IPFSManager from "../../utils/ipfs_upload";
 import { ArtistRevenue } from "@/utils/artist_revenue";
 import { Network, Provider } from "aptos";
 import { min } from "date-fns";
+import { set } from "mongoose";
 
 const mintingModuleAddress =
-  "0xa715798c513b5af39165b04969c3c502fedc5da1dd3b64cbfc68573368ba3c9b";
-const moduleAddress = `0xa715798c513b5af39165b04969c3c502fedc5da1dd3b64cbfc68573368ba3c9b`;
+  "0x4b383fdf80ded703071394131c88aeac3c6c72ca7f570e24aabc335ff7be1bfa";
+const moduleAddress = `0x4b383fdf80ded703071394131c88aeac3c6c72ca7f570e24aabc335ff7be1bfa`;
 const provider = new Provider(Network.DEVNET);
 
 const reducer = (state: any, action: any) => {
@@ -33,7 +34,6 @@ const reducer = (state: any, action: any) => {
       return state;
   }
 };
-
 
 const walletManager = new WalletManager();
 const ipfsManager = new IPFSManager();
@@ -85,9 +85,9 @@ const Signup = () => {
         type_arguments: [],
         arguments: [
           textEncoder.encode(state.name),
-          textEncoder.encode(`ipfs://${ipfshash}`),
+          textEncoder.encode(`${ipfshash}`),
           textEncoder.encode(state.desc),
-          textEncoder.encode(`ipfs://${profileCid}`),
+          textEncoder.encode(`${profileCid}`),
         ],
       };
       const pendingTransaction = await (
@@ -106,13 +106,11 @@ const Signup = () => {
     }
   };
 
- 
-  
   const RegisterArtist = async (e: any) => {
     e.preventDefault();
     await artistRevenue.initializeSponsor();
-     await artistRevenue.AddArtist();
-     
+    await artistRevenue.AddArtist();
+
     const data = {
       ...state,
       walletAddress: walletManager.getAddress(),
@@ -131,13 +129,13 @@ const Signup = () => {
     try {
       await axios
         .post(`${origin}/api/artist/new`, data, config)
-    
+
         .then(async (response) => {
           await mintNFT(response.data).then(() => {
             console.log(`The new artist is successfully registered`);
             console.log(response.data);
             redirectOnVerification();
-            console.log('Redirecting to dashboard');
+            console.log("Redirecting to dashboard");
           });
         })
         .catch((error) => {
@@ -150,7 +148,7 @@ const Signup = () => {
 
   const redirectOnVerification = () => {
     router.push("/dashboard");
-  }
+  };
 
   const onClick = useCallback(() => {
     const fileInput = document.getElementById("fileInput");
@@ -171,6 +169,8 @@ const Signup = () => {
     }
     setUploading(false);
   };
+
+  const [dum, setDum] = useState("");
 
   return (
     <div className="w-screen bg-zinc-950 flex flex-row">
@@ -209,7 +209,7 @@ const Signup = () => {
         <div className="w-[35vw] pt-[0.7vw] border-solid border-white/6 backdrop-blur-[24px] shadow-[2px_4px_48px_0px_rgba(0,_0,_0,_0.5)] bg-[linear-gradient(159deg,_rgba(28,_30,_34,_0.33)_-9%,rgba(31,_34,_40,_0.5)_113%)] bg-cover bg-50%_50% bg-blend-normal bg-no-repeat flex flex-row justify-between h-16 items-start pl-6 pr-2 rounded-[24px]">
           <div className="text-xl font-['Aileron'] font-light leading-[28px] text-white mt-2">
             {isConnected
-              ? walletManager.getAddress().substring(0, 15) + '...'
+              ? walletManager.getAddress().substring(0, 15) + "..."
               : "Wallet"}
           </div>
           {isConnected ? (
@@ -256,6 +256,17 @@ const Signup = () => {
             />
           </div>
           <div className="flex flex-col gap-1 w-full items-start">
+            <div className="opacity-60 text-xs font-['Aileron' ] leading-[20px] text-white ml-1">
+              Enter Your Spotify URI
+            </div>
+            <input
+              value={dum}
+              onChange={(e) => setDum(e.target.value)}
+              className="outline-none text-sm font-['Aileron' ] leading-[20px] text-white bg-[rgba(38,_40,_44,_0.4)] flex flex-row w-full h-24 items-start pt-3 px-4 rounded-lg"
+              placeholder="Spotify URI"
+            />
+          </div>
+          <div className="flex flex-col gap-1 w-full items-start">
             <div className="opacity-60 text-xs font-['Aileron'] leading-[20px] text-white ml-1">
               Profile Image
             </div>
@@ -275,7 +286,7 @@ const Signup = () => {
               <Image
                 src={upload}
                 alt=""
-                style={{ width: "5vw", height: "5vw", marginTop:"18.5px" }}
+                style={{ width: "5vw", height: "5vw", marginTop: "18.5px" }}
               />
               <Instructions>
                 {profileImage === null ? (
@@ -292,9 +303,9 @@ const Signup = () => {
                   </div>
                 ) : (
                   <span style={{ fontSize: "2.2vh" }}>
-                    <div/>
-                    <div/>
-                    <div/>
+                    <div />
+                    <div />
+                    <div />
                     File Uploaded Successfully
                   </span>
                 )}

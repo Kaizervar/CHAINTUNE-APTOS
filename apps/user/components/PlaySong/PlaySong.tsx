@@ -50,7 +50,7 @@ import { useParams } from "next/navigation";
 
 const playSong = () => {
   const [cid, setCid] = useState<string | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(true);
   const audioRef = useRef<HTMLAudioElement>(null);
   const [progress, setProgress] = useState(0);
   const [volvalue, setvolvalue] = useState(0);
@@ -58,17 +58,217 @@ const playSong = () => {
   const [timesec, setsec] = useState<string | null>("00");
   const [Ismute, setIsmte] = useState<boolean>(true);
   const [currentSong, setCurrentSong] = useState(0);
-  const [title, setTitle] = useState("first");
+  const [title, setTitle] = useState("Fatafati Football");
   const [src, setSrc] = useState(
-    "https://ipfs.io/ipfs/QmWMhDYHBnBWZL37zavxgwvyQ1m6FYS9ZHBDTcgaDBfiKW"
+    "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt"
   );
-  const [artist, setArtist] = useState("artist");
+  const [artist, setArtist] = useState("Ankush Roy");
   const [img, setImg] = useState("https://svgshare.com/i/10xc.svg");
+  const[aud,setAud]=useState("https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/QmQ18XbaRNVPhGtgccg1pYnqiSZWDZSi2LYGqMrXff7Nko")
 
   const [durationmin, setDurationmint] = useState("00");
   const [durationsecond, setDurationsecond] = useState("00");
 
   const [tracks, setTracks] = useState<any[]>([]);
+  const track1=[
+    // {
+    // 	title: 'Eyes to the sky',
+    // 	artist: 'Jon Bellion',
+
+    // },
+    // {
+    //   name: "Lazarus",
+    //   animation_url:
+    //     "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+    //   image: "https://svgshare.com/i/10xH.svg",
+    //   attributes: [
+    //     {
+    //       trait_type: "Genre",
+    //       value: "Pop",
+    //     },
+    //     {
+    //       trait_type: "Artist",
+    //       value: "Dave",
+    //     },
+    //   ],
+    //   // img_src: LazarusImg,
+    //   // src: Lazarus,
+    //   //hash: 'QmWymKE9
+    // },
+    {
+      name: "Yosemite",
+      // img_src: YosemiteImg,
+      animation_url:
+        "https://ipfs.io/ipfs/QmbLTnRRGJmuiBy1QkD849C6QuqWUJ6vD8bVpZTM7EW8po",
+      image: "https://svgshare.com/i/10ww.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Travis scott",
+        },
+      ],
+    },
+
+    {
+      name: "Kola Veri Di",
+      // img_src: AudioImg,
+      animation_url:
+        "https://ipfs.io/ipfs/Qmd2j7ZFWFW7je66XMUwNU5z4TruVNcNsx3Hqv7LeFpHjc",
+      image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Anirudh Ravichandra",
+        },
+      ],
+    },
+    {
+      name: "Cute Volume 1",
+      animation_url:
+        "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+      image: "https://svgshare.com/i/111a.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Honey Singh",
+        },
+      ],
+      // img_src: LazarusImg,
+      // src: Lazarus,
+    },
+    {
+      name: "Ghar Bana Lia",
+      animation_url:
+        "https://green-recent-centipede-889.mypinata.cloud/ipfs/QmdpaGcsus4kjo2CoGsAryEANvScM8NGNJWV5shX9kGew3?pinataGatewayToken=k9Uh0sEkauw4Ftiab1wtXgWgeKnRdgnmUxFvKGKyCtGvWT9Bhc7REDRE_ShxXw-o",
+      image: "https://img.freepik.com/free-photo/painting-mountain-lake-with-mountain-background_188544-9126.jpg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Apporv Shrivastava",
+        },
+      ],
+      // img_src: LazarusImg,
+      // src: Lazarus,
+    },
+    {
+      name: "Samjho Na",
+      // img_src: AudioImg,
+      animation_url:
+        "https://green-recent-centipede-889.mypinata.cloud/ipfs/QmZkRcGL1rJjtsCuc5ZhwrknREHoMwa7nzTYf4nHfAZPb5?pinataGatewayToken=k9Uh0sEkauw4Ftiab1wtXgWgeKnRdgnmUxFvKGKyCtGvWT9Bhc7REDRE_ShxXw-o",
+      image: "https://svgshare.com/i/111R.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Aditya Rikhari",
+        },
+      ],
+    },
+    {
+      name: "Kaafizyda",
+      // img_src: AudioImg,
+      animation_url:
+        "https://green-recent-centipede-889.mypinata.cloud/ipfs/QmPb8aCZqkn43DR8QViUqT35Z8eMsksQNhA7gh9wARJHct?pinataGatewayToken=k9Uh0sEkauw4Ftiab1wtXgWgeKnRdgnmUxFvKGKyCtGvWT9Bhc7REDRE_ShxXw-o",
+      image: "https://svgshare.com/i/1113.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Nanku",
+        },
+      ],
+    },
+    {
+      name: "Dark paradise",
+      // img_src: AudioImg,
+      animation_url:
+        "https://ipfs.io/ipfs/Qmd2j7ZFWFW7je66XMUwNU5z4TruVNcNsx3Hqv7LeFpHjc",
+      image: "https://svgshare.com/i/10xc.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Lana del ray",
+        },
+      ],
+    },
+    {
+      name: "Dark paradise",
+      // img_src: AudioImg,
+      animation_url:
+        "https://ipfs.io/ipfs/Qmd2j7ZFWFW7je66XMUwNU5z4TruVNcNsx3Hqv7LeFpHjc",
+      image: "https://svgshare.com/i/10xc.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Lana del ray",
+        },
+      ],
+    },
+    {
+      name: "Dark paradise",
+      // img_src: AudioImg,
+      animation_url:
+        "https://ipfs.io/ipfs/Qmd2j7ZFWFW7je66XMUwNU5z4TruVNcNsx3Hqv7LeFpHjc",
+      image: "https://svgshare.com/i/10xc.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Lana del ray",
+        },
+      ],
+    },
+    {
+      name: "Dark paradise",
+      // img_src: AudioImg,
+      animation_url:
+        "https://ipfs.io/ipfs/Qmd2j7ZFWFW7je66XMUwNU5z4TruVNcNsx3Hqv7LeFpHjc",
+      image: "https://svgshare.com/i/10xc.svg",
+      attributes: [
+        {
+          trait_type: "Genre",
+          value: "Pop",
+        },
+        {
+          trait_type: "Artist",
+          value: "Lana del ray",
+        },
+      ],
+    },
+  ];
   const params = useParams();
 
   useEffect(() => {
@@ -78,8 +278,9 @@ const playSong = () => {
       const data = await response.json();
       console.log(data.songs);
       setTracks(data.songs);
-    };
 
+    };
+ 
     if (params) getAlbumDetails();
     else {
       setTracks([
@@ -91,7 +292,7 @@ const playSong = () => {
         {
           name: "Lazarus",
           animation_url:
-            "https://ipfs.io/ipfs/QmWMhDYHBnBWZL37zavxgwvyQ1m6FYS9ZHBDTcgaDBfiKW",
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
           image: "https://svgshare.com/i/10xH.svg",
           attributes: [
             {
@@ -105,6 +306,45 @@ const playSong = () => {
           ],
           // img_src: LazarusImg,
           // src: Lazarus,
+          //hash: 'QmWymKE9
+        },
+        {
+          name: "Lazarus",
+          animation_url:
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+          image: "https://svgshare.com/i/10xH.svg",
+          attributes: [
+            {
+              trait_type: "Genre",
+              value: "Pop",
+            },
+            {
+              trait_type: "Artist",
+              value: "Dave",
+            },
+          ],
+          // img_src: LazarusImg,
+          // src: Lazarus,
+          //hash: 'QmWymKE9
+        },
+        {
+          name: "Lazarus",
+          animation_url:
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+          image: "https://svgshare.com/i/10xH.svg",
+          attributes: [
+            {
+              trait_type: "Genre",
+              value: "Pop",
+            },
+            {
+              trait_type: "Artist",
+              value: "Dave",
+            },
+          ],
+          // img_src: LazarusImg,
+          // src: Lazarus,
+          //hash: 'QmWymKE9
         },
         {
           name: "Yosemite",
@@ -144,7 +384,61 @@ const playSong = () => {
         {
           name: "Lazarus",
           animation_url:
-            "https://ipfs.io/ipfs/QmWMhDYHBnBWZL37zavxgwvyQ1m6FYS9ZHBDTcgaDBfiKW",
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+          image: "https://svgshare.com/i/10xH.svg",
+          attributes: [
+            {
+              trait_type: "Genre",
+              value: "Pop",
+            },
+            {
+              trait_type: "Artist",
+              value: "Dave",
+            },
+          ],
+          // img_src: LazarusImg,
+          // src: Lazarus,
+        },
+        {
+          name: "Lazarus",
+          animation_url:
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+          image: "https://svgshare.com/i/10xH.svg",
+          attributes: [
+            {
+              trait_type: "Genre",
+              value: "Pop",
+            },
+            {
+              trait_type: "Artist",
+              value: "Dave",
+            },
+          ],
+          // img_src: LazarusImg,
+          // src: Lazarus,
+        },
+        {
+          name: "Lazarus",
+          animation_url:
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
+          image: "https://svgshare.com/i/10xH.svg",
+          attributes: [
+            {
+              trait_type: "Genre",
+              value: "Pop",
+            },
+            {
+              trait_type: "Artist",
+              value: "Dave",
+            },
+          ],
+          // img_src: LazarusImg,
+          // src: Lazarus,
+        },
+        {
+          name: "Lazarus",
+          animation_url:
+            "https://ipfs.io/ipfs/QmWymKE9W2TWbgaz7phUTyEHoRhaP3t39zw5dExH4MudLt",
           image: "https://svgshare.com/i/10xH.svg",
           attributes: [
             {
@@ -195,6 +489,7 @@ const playSong = () => {
   const [trackIndex, setTrackIndex] = useState(2);
   // const [trackProgress, setTrackProgress] = useState(0);
 
+
   const toPrevTrack = () => {
     if (trackIndex - 1 < 0) {
       setTrackIndex(tracks.length - 1);
@@ -210,20 +505,28 @@ const playSong = () => {
       setTrackIndex(0);
     }
   };
-
+useEffect(() => {
+  const id=localStorage.getItem("index");
+  console.log("id= ",id);
+  if(id){
+  setTrackIndex(parseInt(id));
+  }
+});
   useEffect(() => {
-    if (tracks.length > 0 && trackIndex < tracks.length) {
-      const t = tracks[trackIndex];
+    if (track1.length > 0 && trackIndex < track1.length) {
+      console.log("pt= ", trackIndex);
+      const t = track1[trackIndex];
       if (t) {
         const name = t.name;
         const source = t.animation_url;
         const Image = t.image;
         const author = t.attributes[1].value;
         setSrc(source);
+
         setTitle(name);
         setArtist(author);
         setImg(Image);
-
+        setAud(source);
         setIsPlaying(false);
         setProgress(0);
         setsec("00");
@@ -326,7 +629,8 @@ const playSong = () => {
   //         setvolvalue(e.target.value);
   //     }
 
-  // };
+  // // };
+  // setCid("QmU33wFUNwk9zFeBHnNURsQUqFecrs3eHFdLNo4moPzdQK");
 
   const updateProgress = () => {
     if (audioRef.current) {
@@ -446,11 +750,15 @@ const playSong = () => {
                 </ControlButton>
 
                 <PlayPauseButton onClick={togglePlayPause}>
+
                   <IconContext.Provider value={{ style: { fontSize: "20px" } }}>
                     {/* <FaPlay /> */}
                     <audio ref={audioRef} controls style={{ display: "none" }}>
-                      {/* <source src={`https://ipfs.io/ipfs/${cid}`} type="audio/mp3" /> */}
-                      <source src={src} type="audio/mp3" />
+                     {/* newSrc=`https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/${cid}`;
+                      setSrc(newsrc); */}
+                      <source src={aud} type="audio/mp3" />
+                       {/* <source src={`https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/QmQ18XbaRNVPhGtgccg1pYnqiSZWDZSi2LYGqMrXff7Nko`} type="audio/mp3" />  */}
+                      {/* <source src={src} type="audio/mp3" /> */}
                     </audio>
 
                     <div>

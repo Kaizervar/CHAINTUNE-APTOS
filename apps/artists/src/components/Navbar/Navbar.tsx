@@ -17,6 +17,8 @@ const Navbar = () => {
     localStorage.removeItem("isStaked");
     router.push("/stake");
   };
+  const profileCid = localStorage.getItem("profileCid");
+const imageUrl = `https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/Qme7hgq7UhGrdWuvAXZiuAkFtBWa5rXELQNZECuDePQiDQ`;
 
   return (
     <div className="flex bg-zinc-950 py-[1.5vw] px-[1.5vw] fixed z-10 flex-row justify-between w-full items-center">
@@ -55,6 +57,14 @@ const Navbar = () => {
             } cursor-pointer`}
           >
             Dashboard
+          </a>
+          <a
+            href="/convert"
+            className={`text-4xl font-['Aileron'] font-light leading-[48px] text-white ${
+              pathname === "/dashboard" ? "opacity-100" : "opacity-30"
+            } cursor-pointer`}
+          >
+            Convert
           </a>
           <img
             src="https://file.rendit.io/n/0qOa1cpotCzSOnIbUhn0.svg"
@@ -133,7 +143,7 @@ const Navbar = () => {
             </div>
           </div>
           <img
-            src="https://file.rendit.io/n/8318G9zIkHzBWGQcx4qy.svg"
+            src={imageUrl}
             alt="Ellipse"
             id="Ellipse"
             className="w-12"

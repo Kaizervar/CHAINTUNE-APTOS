@@ -13,12 +13,15 @@
 - claim ownership
 - Transparent payments
 - Privacy centric
+- Import Spotify IDs for reputation score
+- Panora for swapping currencies 
 
 ## 📃Pages
 
 - Artist side 
   -   Homepage
   -   Onboarding page
+  -   Convert to Aptos Page (Panora SDK)
   -   Dashboard page
   -   Manage Release page
   -   Preview Release page
@@ -37,6 +40,8 @@
 -   IPFS
 -   Pinata
 -   Move
+-   Panora Swap SDK
+-   Spotify 'get-artist' API
 
 ### Apps and Packages
 
@@ -88,6 +93,8 @@ MONGODB_URI = ""
 MODULE_ADDRESS =""
 PRIVATE_KEY =""
 PUBLIC_KEY=""
+PINATA_API_KEY=""
+REACT_APP_PANORA_WIDGET_API_KEY=""
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -108,7 +115,7 @@ The project is divided into 3 parts
 
 ### Music Artist's Repository
 
-1. When the artist first visits the platform, the register themselves and connect their wallet to their account. Then they put a stake amount for their account. This allows us to limit the number of Artists on the the platformm. Staked amounts will be returned only if they cross a certain threshold of listens.
+1. When the artist first visits the platform, the register themselves and connect their wallet to their account. Then they put a stake amount for their account. In case artists lack the to be staked amount in APT, they can use 'Panora' to convert other currencies seamlessly to APT. Staking allows us to limit the number of Artists on the the platformm. Staked amounts will be returned only if they cross a certain threshold of listens and a threshold period of time.
 2. Then they're led to the dashboard from where they can either create new releases or manage their existing releases.
 
 <!-- USAGE EXAMPLES -->

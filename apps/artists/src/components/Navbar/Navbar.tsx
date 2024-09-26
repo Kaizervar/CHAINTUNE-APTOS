@@ -4,6 +4,7 @@
 import { usePathname } from "next/navigation";
 import { WalletManager } from "../../utils/connect_wallet";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -18,7 +19,7 @@ const Navbar = () => {
     router.push("/stake");
   };
   const profileCid = localStorage.getItem("profileCid");
-const imageUrl = `https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/Qme7hgq7UhGrdWuvAXZiuAkFtBWa5rXELQNZECuDePQiDQ`;
+  const imageUrl = `https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/Qme7hgq7UhGrdWuvAXZiuAkFtBWa5rXELQNZECuDePQiDQ`;
 
   return (
     <div className="flex bg-zinc-950 py-[1.5vw] px-[1.5vw] fixed z-10 flex-row justify-between w-full items-center">
@@ -66,6 +67,14 @@ const imageUrl = `https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/Qme7hgq7Uh
           >
             Convert
           </a>
+          <Link
+            href="/trade"
+            className={`text-4xl font-['Aileron'] font-light leading-[48px] text-white ${
+              pathname === "/dashboard" ? "opacity-100" : "opacity-30"
+            } cursor-pointer`}
+          >
+            Trade
+          </Link>
           <img
             src="https://file.rendit.io/n/0qOa1cpotCzSOnIbUhn0.svg"
             alt="Search"
@@ -142,12 +151,7 @@ const imageUrl = `https://tan-worldwide-macaw-428.mypinata.cloud/ipfs/Qme7hgq7Uh
               />
             </div>
           </div>
-          <img
-            src={imageUrl}
-            alt="Ellipse"
-            id="Ellipse"
-            className="w-12"
-          />
+          <img src={imageUrl} alt="Ellipse" id="Ellipse" className="w-12" />
           {/* </div> */}
         </div>
       </div>

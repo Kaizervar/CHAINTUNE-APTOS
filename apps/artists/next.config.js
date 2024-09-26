@@ -1,14 +1,22 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        appDir: true,
-        serverComponentsExternalPackages: ["mongoose"],
+  experimental: {
+    appDir: true,
+    serverComponentsExternalPackages: ["mongoose"],
+  },
+  compiler: { styledComponents: true },
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+    return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
       },
-      compiler: { styledComponents: true, },
-      webpack(config) {
-        config.experiments = { ...config.experiments, topLevelAwait: true }
-        return config
-      }
-}
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

@@ -7,3 +7,7 @@
     all: unset;
   }
 }
+
+.br {
+  border: 2px solid red;
+}

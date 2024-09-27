@@ -165,6 +165,11 @@ const Navbar = () => {
         <Link href="/explore">
           <Tab style={{ color: getColor(pathname, "/explore") }}>Explore</Tab>
         </Link>
+        <Link href="/marketplace">
+          <Tab style={{ color: getColor(pathname, "/marketplace") }}>
+            Marketplace
+          </Tab>
+        </Link>
         <Link
           href="/search"
           style={{ display: "flex", gap: "0.559vw", alignItems: "center" }}

@@ -4,11 +4,19 @@ const nextConfig = {
     appDir: true,
     serverComponentsExternalPackages: ["mongoose"],
   },
-  compiler: { styledComponents: true, },
+  compiler: { styledComponents: true },
   webpack(config) {
-    config.experiments = { ...config.experiments, topLevelAwait: true }
-    return config
-  }
-}
+    config.experiments = { ...config.experiments, topLevelAwait: true };
+    return config;
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**",
+      },
+    ],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

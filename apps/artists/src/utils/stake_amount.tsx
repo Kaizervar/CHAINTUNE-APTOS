@@ -2,7 +2,7 @@
 import { AptosAccount, AptosClient, BCS, HexString, Network, Provider } from "aptos";
 export class StakeAmount {
   private provider = new Provider(Network.DEVNET);
-  public moduleAddress = `0x4b9756767d645fd255bebcbe818ce313dd3036cfbd2c994fe7ddf2728084267e`;
+  public moduleAddress = `0x88374d2559b0cdd87940ff1a644a597e3ab860080cb0e21426d73f4c06342190`;
   public teamAddress = "0x242c026099140c0d787faf9da562d0aace66700666a4d8fd80dab86756b31660";
   public streamsThreshold = 1000;
   public stakeAmount = 100000000;
@@ -52,7 +52,7 @@ export class StakeAmount {
       type: "entry_function_payload",
       function: `${this.moduleAddress}::locked_coins::initialize_sponsor`,
       type_arguments: ["0x1::aptos_coin::AptosCoin"],
-      arguments: [this.teamAddress],
+      arguments: [account.address],
     }
     try {
       console.log(account.address);
@@ -88,7 +88,7 @@ export class StakeAmount {
       type: "entry_function_payload",
       function: `${this.moduleAddress}::locked_coins::add_locked_coins`,
       type_arguments: ["0x1::aptos_coin::AptosCoin"],
-      arguments: [this.teamAddress, this.stakeAmount, this.streamsThreshold],
+      arguments: [account.address, this.stakeAmount, this.streamsThreshold],
     };
 
     try {

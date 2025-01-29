@@ -6,6 +6,8 @@
 
 # Welcome to ChainTune
 
+[![Chaintune Demo](https://img.youtube.com/vi/XlvcjoL5mL4/0.jpg)](https://www.youtube.com/watch?v=XlvcjoL5mL4)
+
 ## 🚀 Main Features
 
 - Provide social presence
